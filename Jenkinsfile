@@ -1,5 +1,4 @@
-pipeline
-{
+pipeline {
     agent any
     stages {
         stage (git) {
@@ -7,14 +6,14 @@ pipeline
                 git branch: 'main', url: 'https://github.com/vamsibyramala/live01.git'
             }
         }
-        stage (maven) {
+        stage (build) {
             steps {
                 sh 'mvn clean package'
             }
         }
         stage (deploy) {
             steps {
-                deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://13.233.148.251:8080/')], contextPath: 'ROOT', war: '**/*.war'
+                deploy adapters: [tomcat9(credentialsId: 'tomcat', path: '', url: 'http://13.233.23.109:8081/')], contextPath: 'vamsi', war: '**/*.war'
             }
         }
     }
